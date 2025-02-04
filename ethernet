@@ -1,0 +1,36 @@
+#include <SPI.h>
+#include <Ethernet.h>
+#include <EthernetUdp.h>
+
+#define UDPMessagingPort 9999 // UDP Messaging Port
+
+// Déclaration des objets Ethernet et UDP
+EthernetUDP udp;
+
+void setup() {
+  Serial.begin(115200); // Ouvre la connexion série à 115200 bauds.
+
+  // Configuration de la MAC et de l'IP
+  byte mac[] = { 0x6A, 0x4D, 0xC6, 0x55, 0xC7, 0x4A };
+  byte ip[] = { 12, 215, 1, 99 };
+
+  // Configure le pin 3 comme sortie pour SPI_EN
+  pinMode(3, OUTPUT); // Configure le pin 3 comme sortie
+  digitalWrite(3, HIGH); // Active le mode SPI
+
+  // Initialisation de l'Ethernet avec la MAC et l'IP définies
+  Ethernet.begin(mac, ip);
+
+  // Démarre le service UDP
+  while (!udp.begin(UDPMessagingPort)) {
+    // Attendre jusqu'à ce que le service UDP soit prêt
+  }
+
+  delay(100); // Attendre pour s'assurer que tout est alimenté avant d'envoyer ou de recevoir des données
+
+  Serial.println("WIZ812MJ est prêt et connecté !");
+}
+
+void loop() {
+  // Ici, vous pouvez ajouter le code pour envoyer ou recevoir des données via UDP
+}
